@@ -182,7 +182,7 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2563EB), foregroundColor: Colors.white),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم إرسال العقار للمراجعة! 🚀')));
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم إرسال العقار بنجاح! 🚀')));
               },
               child: const Text('نشر العقار'),
             ),
