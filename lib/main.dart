@@ -35,17 +35,18 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const AddPropertyScreen(),
-    const AdminDashboardScreen(),
-  ];
+  bool _isDollar = false; // متغير عام للتحكم بالعملة (ريال أو دولار)
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> screens = [
+      HomeScreen(isDollar: _isDollar, onCurrencyChanged: (val) => setState(() => _isDollar = val)),
+      const AddPropertyScreen(),
+      const AdminDashboardScreen(),
+    ];
+
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         selectedItemColor: const Color(0xFF2563EB),
@@ -65,9 +66,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 }
 
-// 1. الشاشة الرئيسية
+// 1. الشاشة الرئيسية مع زر تبديل العملة
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final bool isDollar;
+  final ValueChanged<bool> onCurrencyChanged;
+
+  const HomeScreen({super.key, required this.isDollar, required this.onCurrencyChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -75,15 +79,45 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF0F172A),
         title: const Text('داري اليمن 🏛️', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        actions: [
+          // زر تبديل العملة السريع في الأعلى
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ChoiceChip(
+              label: Text(isDollar ? 'USD \$' : 'ريال يمني', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+              selected: isDollar,
+              selectedColor: Colors.amber,
+              onSelected: onCurrencyChanged,
+            ),
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           const Text('عقارات مميزة في صنعاء وعدن 📍', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
-          _buildPropertyCard('شقة فاخرة للإيجار', 'صنعاء - الحدة', '150,000 ر.ي / شهرياً', Icons.apartment, true),
-          _buildPropertyCard('أرض استثمارية للبيع', 'عدن - المنصورة', '85,000 \$', Icons.landscape, false),
-          _buildPropertyCard('هنجر ومستودع تجاري', 'صنعاء - الستين', '200,000 \$', Icons.store, true),
+          _buildPropertyCard(
+            'شقة فاخرة للإيجار', 
+            'صنعاء - الحدة', 
+            isDollar ? '600 \$ / شهرياً' : '150,000 ر.ي / شهرياً', 
+            Icons.apartment, 
+            true
+          ),
+          _buildPropertyCard(
+            'أرض استثمارية للبيع', 
+            'عدن - المنصورة', 
+            isDollar ? '85,000 \$' : '45,000,000 ر.ي', 
+            Icons.landscape, 
+            false
+          ),
+          _buildPropertyCard(
+            'هنجر ومستودع تجاري', 
+            'صنعاء - الستين', 
+            isDollar ? '200,000 \$' : '105,000,000 ر.ي', 
+            Icons.store, 
+            true
+          ),
         ],
       ),
     );
@@ -116,8 +150,6 @@ class AddPropertyScreen extends StatefulWidget {
 class _AddPropertyScreenState extends State<AddPropertyScreen> {
   final _formKey = GlobalKey<FormState>();
   String _listingType = 'للإيجار';
-  String _propertyType = 'شقة';
-  String _governorate = 'صنعاء';
   bool _hasSolar = false;
 
   @override
