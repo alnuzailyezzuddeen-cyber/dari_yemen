@@ -110,8 +110,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
       children: [
         const Text('إعلانات بانتظار الموافقة والنشر', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
-        _buildPendingPropertyCard('هنجر ومستودع تجاري 600m²', 'صنعاء - الستين', 'المكتب: عقارات اليمن', '200,000 $'),
-        _buildPendingPropertyCard('أرض استثمارية للبيع 10 لبن', 'عدن - المنصورة', 'المالك: أحمد العنسي', '85,000 $'),
+        _buildPendingPropertyCard('هنجر ومستودع تجاري 600m²', 'صنعاء - الستين', 'المكتب: عقارات اليمن', '200,000 \$'),
+        _buildPendingPropertyCard('أرض استثمارية للبيع 10 لبن', 'عدن - المنصورة', 'المالك: أحمد العنسي', '85,000 \$'),
       ],
     );
   }
@@ -124,7 +124,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
         const SizedBox(height: 12),
         Card(
           child: ListTile(
-            leading: const CircleAvatar(backgroundColor: Colors.blue, child: Icon(Icons.business, color: Colors.white)),
+            leading: CircleAvatar(backgroundColor: Colors.blue.shade100, child: const Icon(Icons.business, color: Colors.blue)),
             title: const Text('مكتب الأمانة العقاري'),
             subtitle: const Text('رقم السجل التجاري: 10492 | صنعاء'),
             trailing: ElevatedButton(
@@ -146,7 +146,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
         const SizedBox(height: 12),
         _buildPaymentReceiptCard('كريمي إكسبرس / حاسب', 'المبلغ: 25,000 ر.ي', 'رقم السند: 9948201', 'ترقية إعلان مميز', Colors.blue),
         _buildPaymentReceiptCard('جيب (Jeeb)', 'المبلغ: 50,000 ر.ي', 'رقم العملية: JB-8821', 'اشتراك شهر للمكتب', Colors.purple),
-        _buildPaymentReceiptCard('حوالة عبر النجم', 'المبلغ: 100 $', 'رقم الحوالة: 7710293', 'توثيق حساب سنوي', Colors.orange),
+        _buildPaymentReceiptCard('حوالة عبر النجم', 'المبلغ: 100 \$', 'رقم الحوالة: 7710293', 'توثيق حساب سنوي', Colors.orange),
       ],
     );
   }
